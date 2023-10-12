@@ -1,14 +1,14 @@
+package mainClasses;
+
 public class Client {
     private String firstName;
     private String secondName;
-    private String personalID;
     private boolean isArchive;
     private String phoneNumber;
 
-    public Client(String firstName, String secondName, String personalID, String phoneNumber) {
+    public Client(String firstName, String secondName, String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.personalID = personalID;
         this.phoneNumber = phoneNumber;
     }
 
@@ -29,9 +29,6 @@ public class Client {
         this.secondName = secondName;
     }
 
-    public String getPersonalID() {
-        return personalID;
-    }
 
     public boolean isArchive() {
         return isArchive;
@@ -51,10 +48,9 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "mainClasses.Client{" +
                 "firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
-                ", personalID='" + personalID + '\'' +
                 ", isArchive=" + isArchive +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';

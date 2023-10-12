@@ -1,18 +1,18 @@
+package mainClasses;
+
 public class Item {
     private int yearOfPremiere;
     private boolean isRented;
     private boolean isArchive;
     private String name;
-    private String itemID;
     private String style;
     private String author;
     private double basePrice;
 
-    public Item(int yearOfPremiere, boolean isRented, String name, String itemID, String style, String author, double basePrice) {
+    public Item(int yearOfPremiere, boolean isRented, String name, String style, String author, double basePrice) {
         this.yearOfPremiere = yearOfPremiere;
         this.isRented = isRented;
         this.name = name;
-        this.itemID = itemID;
         this.style = style;
         this.author = author;
         this.basePrice = basePrice;
@@ -46,9 +46,6 @@ public class Item {
         return name;
     }
 
-    public String getItemID() {
-        return itemID;
-    }
 
     public String getStyle() {
         return style;
@@ -68,11 +65,10 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "mainClasses.Item{" +
                 "yearOfPremiere=" + yearOfPremiere +
                 ", isRented=" + isRented +
                 ", name='" + name + '\'' +
-                ", itemID='" + itemID + '\'' +
                 ", style='" + style + '\'' +
                 ", author='" + author + '\'' +
                 ", basePrice=" + basePrice +
