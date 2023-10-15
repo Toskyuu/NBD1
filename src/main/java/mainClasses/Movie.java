@@ -1,7 +1,19 @@
 package mainClasses;
 
+import jakarta.persistence.*;
+
+@Entity
+@PrimaryKeyJoinColumn(name = "movie_ID")
 public class Movie extends Item{
-    public Movie(int yearOfPremiere, boolean isRented, String name, String itemID, String style, String author, double basePrice) {
+
+    private int totalTime;
+
+    public Movie(int yearOfPremiere, boolean isRented, String name, String itemID, String style, String author, double basePrice, int totalTime) {
         super(yearOfPremiere, isRented, name, style, author, basePrice);
+        this.totalTime = totalTime;
+    }
+
+    public Movie() {
+
     }
 }

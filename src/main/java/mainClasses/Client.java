@@ -1,15 +1,30 @@
 package mainClasses;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Client {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "second_name", nullable = false)
     private String secondName;
+    @Column(name = "is_archive", nullable = false)
     private boolean isArchive;
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     public Client(String firstName, String secondName, String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Client() {
+
     }
 
     public String getFirstName() {

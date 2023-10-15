@@ -1,12 +1,24 @@
 package mainClasses;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
 public class Rent {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "begin_date", nullable = false)
     private Date beginDate;
+    @Column(name = "end_date")
     private Date endDate;
+    @Column(name = "cost")
     private float rentCost;
+    @ManyToOne()
     private Client client;
+    @ManyToOne
     private Item item;
 
     public Rent(Date beginDate, float rentCost, Client client, Item item) {
@@ -14,6 +26,10 @@ public class Rent {
         this.rentCost = rentCost;
         this.client = client;
         this.item = item;
+    }
+
+    public Rent() {
+
     }
 
     public void endRent(Date endDate) {

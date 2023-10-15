@@ -1,12 +1,27 @@
 package mainClasses;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Item {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "premiere", nullable = false)
     private int yearOfPremiere;
+    @Column(name = "is_rented", nullable = false)
     private boolean isRented;
+    @Column(name = "is_archive", nullable = false)
     private boolean isArchive;
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "style", nullable = false)
     private String style;
+    @Column(name = "author", nullable = false)
     private String author;
+    @Column(name = "price", nullable = false)
     private double basePrice;
 
     public Item(int yearOfPremiere, boolean isRented, String name, String style, String author, double basePrice) {
@@ -16,6 +31,10 @@ public class Item {
         this.style = style;
         this.author = author;
         this.basePrice = basePrice;
+    }
+
+    public Item() {
+
     }
 
     public int getYearOfPremiere() {
