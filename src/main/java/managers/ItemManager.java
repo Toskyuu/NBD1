@@ -17,14 +17,14 @@ public class ItemManager {
         this.itemRepo = itemRepo;
     }
 
-    public void registerMusic(String name, int yearOfPremiere, int itemID, boolean isRented,
-                              String author, String style, double basePrice, int numberOfSongs){
-        itemRepo.add(new MusicAlbum(name, yearOfPremiere, itemID, isRented, author, style, basePrice, numberOfSongs));
+    public void registerMusic(int yearOfPremiere, boolean isRented, String name,
+                              String style, String author, double basePrice, int numberOfSongs){
+        itemRepo.add(new MusicAlbum( yearOfPremiere, isRented, name, style, author, basePrice, numberOfSongs));
     }
 
-    public void registerMovie(String name, int yearOfPremiere, int itemID, boolean isRented,
-                              String author, String style, double basePrice, int totalTime){
-        itemRepo.add(new Movie(name, yearOfPremiere, itemID, isRented, author, style, basePrice, totalTime));
+    public void registerMovie(int yearOfPremiere, boolean isRented, String name,
+                              String style, String author, double basePrice, int totalTime){
+        itemRepo.add(new Movie(yearOfPremiere, isRented, name, style, author, basePrice, totalTime));
     }
 
     public void unregisterItem(Item item) {
