@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "music_album_ID")
+@Table(name = "music_albums")
 public class MusicAlbum extends Item {
 
     private int numberOfSongs;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "movie_ID")
+@Table(name = "movies")
 public class Movie extends Item{
 
     private int totalTime;
