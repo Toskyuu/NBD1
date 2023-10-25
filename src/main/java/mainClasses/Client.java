@@ -3,6 +3,7 @@ package mainClasses;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "clients")
 public class Client {
 
     @Id
@@ -27,10 +28,13 @@ public class Client {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
-
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -43,7 +47,6 @@ public class Client {
     public void setSecondName(String secondName) {
         this.secondName = secondName;
     }
-
 
     public boolean isArchive() {
         return isArchive;
@@ -70,6 +73,4 @@ public class Client {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
-
-
 }

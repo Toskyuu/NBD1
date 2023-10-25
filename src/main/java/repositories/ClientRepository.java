@@ -17,7 +17,6 @@ public class ClientRepository implements IRepository<Client> {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(client);
-        System.out.println("New guest ID: " + client.getId());
         transaction.commit();
     }
 
