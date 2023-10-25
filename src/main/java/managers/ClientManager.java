@@ -1,28 +1,32 @@
 package managers;
 
 import mainClasses.Client;
-import repositories.IRepository;
-
-import java.util.ArrayList;
+import repositories.ClientRepository;
+import java.util.List;
 
 public class ClientManager {
-    private IRepository<Client> clientRepo = new IRepository<>();
+    private ClientRepository clientRepo;
 
-    public ClientManager(IRepository<Client> clientRepo) {
+    public ClientManager(ClientRepository clientRepo) {
         this.clientRepo = clientRepo;
     }
-    public int registerClient(String firstName, String secondName, String phoneNumber){
-        clientRepo.add(new Client(firstName, secondName, phoneNumber));
-        return clientRepo.getLastID();
+
+    public void registerClient(Client client) {
+        clientRepo.Add(client);
     }
 
     public void unregisterClient(Client client){
-        clientRepo.remove(client);
+        clientRepo.Delete(client);
     }
-    public Client getClient(int id){
-        return clientRepo.getByID(id);
+    public Client getClient(Long id){
+        return clientRepo.Find(id);
     }
-    public String getAllClients(){
+
+    public void edit(Client client) {
+        clientRepo.Update(client);
+    }
+
+    public List<Client> getAllClients(){
         return clientRepo.getAll();
     }
 }
