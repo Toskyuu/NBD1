@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "items")
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     @Column(name = "premiere", nullable = false)
     private int yearOfPremiere;
     @Column(name = "is_rented", nullable = false)
@@ -35,6 +36,10 @@ public class Item {
 
     public Item() {
 
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public int getYearOfPremiere() {

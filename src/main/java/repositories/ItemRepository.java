@@ -1,52 +1,50 @@
 package repositories;
 
 import jakarta.persistence.*;
-import mainClasses.Movie;
+import mainClasses.Item;
 import java.util.List;
 
-
-public class MovieRepository implements IRepository<Movie>{
+public class ItemRepository implements IRepository<Item> {
 
     private final EntityManager entityManager;
 
-    public MovieRepository() {
+    public ItemRepository() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("my-persistence-unit");
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
     @Override
-    public void Add(Movie movie) {
+    public void Add(Item item) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.persist(movie);
+        entityManager.persist(item);
         transaction.commit();
     }
 
     @Override
-    public void Delete(Movie movie) {
+    public void Delete(Item item) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.remove(movie);
-        transaction.commit();
-    }
-
-    // update movie or add movie to database if not exist
-    @Override
-    public void Update(Movie movie) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(movie);
+        entityManager.remove(item);
         transaction.commit();
     }
 
     @Override
-    public Movie Find(Long id) {
-        return entityManager.find(Movie.class, id);
+    public void Update(Item item) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(item);
+        transaction.commit();
     }
 
     @Override
-    public List<Movie> getAll() {
-        Query q = entityManager.createNativeQuery("SELECT * FROM movies", Movie.class);
-        return (List<Movie>) q.getResultList();
+    public Item Find(Long id) {
+        return entityManager.find(Item.class, id);
+    }
+
+    @Override
+    public List<Item> getAll() {
+        Query q = entityManager.createNativeQuery("SELECT * FROM items", Item.class);
+        return (List<Item>) q.getResultList();
     }
 }
