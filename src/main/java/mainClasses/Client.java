@@ -49,13 +49,7 @@ public class Client {
         this.secondName = secondName;
     }
 
-    public boolean isArchive() {
-        return isArchive;
-    }
 
-    public void setArchive(boolean archive) {
-        isArchive = archive;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

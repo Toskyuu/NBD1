@@ -27,16 +27,15 @@ public class clientTest {
     }
 
     @Test
-    void setGetSecondName() {
+    void setGetSecondNameTest() {
         client0.setSecondName("Boberek");
         Assertions.assertEquals(client0.getSecondName(), "Boberek");
     }
 
     @Test
-    void setGetPhoneNumber() {
+    void setGetPhoneNumberTest() {
         client0.setPhoneNumber("112");
         Assertions.assertEquals(client0.getPhoneNumber(), "112");
     }
-
 
 }

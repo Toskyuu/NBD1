@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "rents")
@@ -25,9 +26,8 @@ public class Rent {
     @PrimaryKeyJoinColumn(name = "item_id")
     private Item item;
 
-    public Rent(LocalDate beginDate, double rentCost, Client client, Item item) {
+    public Rent(LocalDate beginDate, Client client, Item item) {
         this.beginDate = beginDate;
-        this.rentCost = rentCost;
         this.client = client;
         this.item = item;
     }
@@ -45,8 +45,12 @@ public class Rent {
     }
 
     public void endRent(LocalDate endDate) {
-        item.setRented(false);
-        this.endDate = endDate;
+        if(endDate.isAfter(beginDate)) {
+            item.setRented(false);
+            this.endDate = endDate;
+            rentCost = item.getBasePrice() * beginDate.until(endDate, ChronoUnit.DAYS);
+        }
+
     }
 
     public int getRentDays() {
@@ -68,6 +72,10 @@ public class Rent {
 
     public Client getClient() {
         return client;
+    }
+
+    public void setRentCost(double rentCost) {
+        this.rentCost = rentCost;
     }
 
     public Item getItem() {

@@ -14,7 +14,7 @@ public class RentManager {
     }
 
     public long rentItem(Client client, Item item) {
-        Rent rent = new Rent(LocalDate.now(), item.getBasePrice(), client, item);
+        Rent rent = new Rent(LocalDate.now(), client, item);
         rentRepository.Add(rent);
         return rent.getId();
     }

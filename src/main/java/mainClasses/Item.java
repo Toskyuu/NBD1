@@ -76,6 +76,18 @@ public class Item {
         return style;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getAuthor() {
         return author;
     }

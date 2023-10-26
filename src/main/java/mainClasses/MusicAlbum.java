@@ -17,4 +17,12 @@ public class MusicAlbum extends Item {
     public MusicAlbum() {
 
     }
+
+    public int getNumberOfSongs() {
+        return numberOfSongs;
+    }
+
+    public void setNumberOfSongs(int numberOfSongs) {
+        this.numberOfSongs = numberOfSongs;
+    }
 }
