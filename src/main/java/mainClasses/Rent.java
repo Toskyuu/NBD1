@@ -17,7 +17,7 @@ public class Rent {
     private LocalDate beginDate;
     @Column(name = "end_date")
     private LocalDate endDate;
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost", nullable = true)
     private double rentCost;
     @ManyToOne()
     @JoinColumn(name = "client_id", nullable = false)
@@ -30,6 +30,7 @@ public class Rent {
         this.beginDate = beginDate;
         this.client = client;
         this.item = item;
+        this.rentCost = item.getBasePrice();
     }
 
     public Rent() {
