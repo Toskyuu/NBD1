@@ -2,26 +2,30 @@ package mainClasses;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
+@Table(name = "rents")
 public class Rent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     @Column(name = "begin_date", nullable = false)
-    private Date beginDate;
+    private LocalDate beginDate;
     @Column(name = "end_date")
-    private Date endDate;
-    @Column(name = "cost")
-    private float rentCost;
+    private LocalDate endDate;
+    @Column(name = "cost", nullable = false)
+    private double rentCost;
     @ManyToOne()
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    @ManyToOne
+    @OneToOne()
+    @PrimaryKeyJoinColumn(name = "item_id")
     private Item item;
 
-    public Rent(Date beginDate, float rentCost, Client client, Item item) {
+    public Rent(LocalDate beginDate, double rentCost, Client client, Item item) {
         this.beginDate = beginDate;
         this.rentCost = rentCost;
         this.client = client;
@@ -32,25 +36,33 @@ public class Rent {
 
     }
 
-    public void endRent(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void endRent(LocalDate endDate) {
         item.setRented(false);
         this.endDate = endDate;
     }
 
     public int getRentDays() {
-        return endDate.getDate() - beginDate.getDate();
+        Period period = Period.between(beginDate, endDate);
+        return period.getDays();
     }
 
-
-    public Date getBeginDate() {
+    public LocalDate getBeginDate() {
         return beginDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public float getRentCost() {
+    public double getRentCost() {
         return rentCost;
     }
 
