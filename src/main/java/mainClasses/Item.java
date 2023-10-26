@@ -9,6 +9,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id")
     private long id;
     @Column(name = "premiere", nullable = false)
     private int yearOfPremiere;
