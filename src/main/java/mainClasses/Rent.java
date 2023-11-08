@@ -1,6 +1,7 @@
 package mainClasses;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DialectOverride;
 
 import java.time.LocalDate;
