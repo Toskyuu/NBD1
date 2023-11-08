@@ -37,39 +37,15 @@ public class main {
         clientManager.registerClient(client1);
         clientManager.registerClient(client2);
 
-        long id1 = rentManager.rentItem(client1, movie2);
-        long id2 = rentManager.rentItem(client2, musicAlbum1);
+        rentManager.rentItem(client1, movie2);
+        rentManager.rentItem(client2, musicAlbum1);
 
         movie2.setAuthor("noname");
 
-//        itemManager.edit(movie2);
-//        itemManager.edit(musicAlbum1);
         System.out.println(movie2);
-        rentManager.returnItem(movie2.getId(), LocalDate.of(2023,11,7));
-//        rentManager.returnItem(musicAlbum1.getId(), LocalDate.of(2023,11,7));
+        rentManager.returnItem(movie2.getId(), LocalDate.of(2023,11,10));
+        rentManager.returnItem(musicAlbum1.getId(), LocalDate.of(2023,11,7));
         System.out.println(movie2);
-//
-//        movie1.setAuthor("zmieniony");
-//        System.out.println(movie1.getAuthor());
-//        System.out.println(itemManager.getItem(1L).getAuthor());
-//
-//        Item itemm = itemManager.getItem(3L);
-//        System.out.println(itemm);
-//        System.out.println(rentRepository.Find(3L));
 
-//        System.out.println("---------------------");
-//        Client clientr = clientManager.getClient(3L);
-//        System.out.println(cclientr);
-//
-//        long rent1ID = rentManager.rentItem(client2, movie1);
-//        System.out.println(movie1.isRented());
-//        rentManager.returnItem(rent1ID, LocalDate.parse("2023-10-28"));
-//        System.out.println(movie1.isRented());
-//
-//        List<Client> clients = clientRepository.getAll();
-//        for (Client client:clients
-//             ) {
-//            System.out.println(client);
-//        }
     }
 }
