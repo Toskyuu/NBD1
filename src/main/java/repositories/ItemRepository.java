@@ -7,15 +7,16 @@ import java.util.List;
 public class ItemRepository implements IRepository<Item> {
 
     private final EntityManager entityManager;
-
+    private EntityTransaction transaction;
     public ItemRepository() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("my-persistence-unit");
         this.entityManager = entityManagerFactory.createEntityManager();
+        this.transaction = entityManager.getTransaction();
     }
 
     @Override
     public void Add(Item item) {
-        EntityTransaction transaction = entityManager.getTransaction();
+//        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(item);
         transaction.commit();
@@ -23,7 +24,7 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Delete(Item item) {
-        EntityTransaction transaction = entityManager.getTransaction();
+//        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(item);
         transaction.commit();
@@ -31,14 +32,19 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Update(Item item) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(item);
-        transaction.commit();
+//        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.merge(item);
+            transaction.commit();
+        } catch(Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Item Find(Long id) {
+    public Item Find(long id) {
         return entityManager.find(Item.class, id);
     }
 
