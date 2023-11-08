@@ -1,5 +1,6 @@
 package managers;
 
+import exceptions.ClientException;
 import mainClasses.Client;
 import repositories.ClientRepository;
 import java.util.List;
@@ -18,8 +19,13 @@ public class ClientManager {
     public void unregisterClient(Client client){
         clientRepository.Delete(client);
     }
-    public Client getClient(Long id){
-        return clientRepository.Find(id);
+    public Client getClient(Long id) throws ClientException {
+        Client client = clientRepository.Find(id);
+        if(client == null) {
+            throw new ClientException("No such client exist");
+        } else {
+            return client;
+        }
     }
     public void edit(Client client) {
         clientRepository.Update(client);
