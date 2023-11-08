@@ -18,37 +18,12 @@ public class RentRepository implements IRepository<Rent>{
 
     @Override
     public void Add(Rent rent) {
-//        entityManager.getTransaction().begin();
-//        try {
-//            if(!entityManager.contains(rent)) {
-//                rent = entityManager.merge(rent);
-//            }
-//
-//            Item item = rent.getItem();
-//
-//            if(!entityManager.contains(item)) {
-//                item = entityManager.merge(item);
-//            }
-//
-//            //blocking item
-////            entityManager.lock(item, LockModeType.PESSIMISTIC_READ);
-//
-////            item.setRented(true);
-////            System.out.println(item);
-//
-//            entityManager.getTransaction().commit();
-//        } catch (Exception e) {
-//            entityManager.getTransaction().rollback();
-//            e.printStackTrace();
-//        }
-
         //adding rent to db
         try {
             transaction.begin();
 
-            Item item = rent.getItem();
             entityManager.persist(rent);
-            entityManager.merge(item);
+            entityManager.merge(rent.getItem());
 
             transaction.commit();
         } catch(OptimisticLockException e) {
@@ -57,24 +32,16 @@ public class RentRepository implements IRepository<Rent>{
             }
             e.printStackTrace();
         }
-//        transaction.begin();
-////        entityManager.lock(rent.getItem(), LockModeType.PESSIMISTIC_READ);
-//
-//        entityManager.persist(rent);
-//
-//        //setting that item is rented and updating it in db
-////        item.setRented(true);
-////        entityManager.merge(item);
-//
-//        transaction.commit();
     }
 
     @Override
     public void Delete(Rent rent) {
         try {
             transaction.begin();
+
             rent = entityManager.merge(rent);
             entityManager.remove(rent);
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -87,19 +54,23 @@ public class RentRepository implements IRepository<Rent>{
 
     @Override
     public void Update(Rent rent) {
-//        transaction.begin();
-//
-//        Item item = rent.getItem();
-//        entityManager.merge(rent);
-////        entityManager.merge(item);
-//
-//        transaction.commit();
         try {
             transaction.begin();
 
             Item item = rent.getItem();
+
+            Item item2 = entityManager.find(Item.class, rent.getItem().getId());
+
+            item2.setRented(item.isRented());
+            item2.setAuthor(item.getAuthor());
+            item2.setArchive(item.isArchive());
+            item2.setName(item.getName());
+            item2.setStyle(item.getStyle());
+            item2.setBasePrice(item.getBasePrice());
+            item2.setYearOfPremiere(item.getYearOfPremiere());
+
             entityManager.merge(rent);
-//            entityManager.merge(item);
+            entityManager.merge(item2);
 
             transaction.commit();
         } catch(OptimisticLockException e) {

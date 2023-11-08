@@ -16,7 +16,6 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Add(Item item) {
-//        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(item);
         transaction.commit();
@@ -24,7 +23,6 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Delete(Item item) {
-//        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(item);
         transaction.commit();
@@ -32,7 +30,6 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Update(Item item) {
-//        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(item);
