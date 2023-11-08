@@ -26,6 +26,9 @@ public class Item {
     @Column(name = "price", nullable = false)
     private double basePrice;
 
+    @Version
+    private Long version;
+
     public Item(int yearOfPremiere, boolean isRented, String name, String style, String author, double basePrice) {
         this.yearOfPremiere = yearOfPremiere;
         this.isRented = isRented;
@@ -97,7 +100,10 @@ public class Item {
     }
 
     public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
+        // if item is rented its price can not be changed
+        if(!this.isRented) {
+            this.basePrice = basePrice;
+        }
     }
 
     @Override

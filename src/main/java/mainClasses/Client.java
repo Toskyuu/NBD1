@@ -19,6 +19,9 @@ public class Client {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
+    @Version
+    private Long version;
+
     public Client(String firstName, String secondName, String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;

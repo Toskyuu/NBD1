@@ -1,6 +1,7 @@
 package mainClasses;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DialectOverride;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -17,20 +18,23 @@ public class Rent {
     private LocalDate beginDate;
     @Column(name = "end_date")
     private LocalDate endDate;
-    @Column(name = "cost", nullable = true)
+    @Column(name = "cost")
     private double rentCost;
     @ManyToOne()
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
     @OneToOne()
-    @PrimaryKeyJoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id")
     private Item item;
+
+    @Version
+    private Long version;
 
     public Rent(LocalDate beginDate, Client client, Item item) {
         this.beginDate = beginDate;
         this.client = client;
         this.item = item;
-        this.rentCost = item.getBasePrice();
+        this.rentCost = 0;
     }
 
     public Rent() {
@@ -49,7 +53,7 @@ public class Rent {
         if(endDate.isAfter(beginDate)) {
             item.setRented(false);
             this.endDate = endDate;
-            rentCost = item.getBasePrice() * beginDate.until(endDate, ChronoUnit.DAYS);
+            this.rentCost = item.getBasePrice() * beginDate.until(endDate, ChronoUnit.DAYS);
         }
 
     }
@@ -93,4 +97,13 @@ public class Rent {
                 ", item=" + item.toString() +
                 '}';
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        Rent otherRent = (Rent) o;
+//        if (this.beginDate == otherRent.beginDate
+//            && this.rentCost == otherRent.rentCost
+//            && this.id == otherRent.id
+//            )
+//    }
 }
