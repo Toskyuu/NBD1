@@ -5,7 +5,6 @@ import mainClasses.MusicAlbum;
 import mainClasses.Rent;
 import managers.ClientManager;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import repositories.ClientRepository;
 import repositories.ItemRepository;
@@ -24,25 +23,15 @@ public class rentRepositoryTest {
     Rent rent = new Rent(LocalDate.now(), client, musicAlbum);
 
     @Test
-    void addTest(){
+    void addTest() {
         cM.registerClient(client);
         iM.Add(musicAlbum);
 
         rr.Add(rent);
-//        System.out.println(rr.Find(rent.getId()).hashCode());
         System.out.println(rent.getItem());
         System.out.println(rr.Find(rent.getId()));
         Assertions.assertEquals(rr.Find(rent.getId()), rent);
     }
-
-//    @Test
-//    void updateTest(){
-//        rr.Add(rent);
-//        Assertions.assertEquals(cr.Find(client.getId()).getFirstName(), client.getFirstName());
-//        client.setFirstName("Miłosz");
-//        Assertions.assertEquals(cr.Find(client.getId()).getFirstName(), client.getFirstName());
-//
-//    }
 
     @Test
     void deleteTest(){
