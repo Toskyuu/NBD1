@@ -16,23 +16,44 @@ public class ItemRepository implements IRepository<Item> {
 
     @Override
     public void Add(Item item) {
-        transaction.begin();
-        entityManager.persist(item);
-        transaction.commit();
+        try {
+            transaction.begin();
+            entityManager.persist(item);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void Delete(Item item) {
-        transaction.begin();
-        entityManager.remove(item);
-        transaction.commit();
+        try {
+            transaction.begin();
+            entityManager.remove(item);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void Update(Item item) {
         try {
             transaction.begin();
-            entityManager.merge(item);
+
+            Item item2 = entityManager.find(Item.class, item.getId());
+            item2.setRented(item.isRented());
+            item2.setAuthor(item.getAuthor());
+            item2.setArchive(item.isArchive());
+            item2.setName(item.getName());
+            item2.setStyle(item.getStyle());
+            item2.setBasePrice(item.getBasePrice());
+            item2.setYearOfPremiere(item.getYearOfPremiere());
+
+            entityManager.merge(item2);
+
             transaction.commit();
         } catch(Exception e) {
             transaction.rollback();

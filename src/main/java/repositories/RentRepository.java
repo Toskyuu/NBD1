@@ -26,10 +26,8 @@ public class RentRepository implements IRepository<Rent>{
             entityManager.merge(rent.getItem());
 
             transaction.commit();
-        } catch(OptimisticLockException e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
+        } catch(Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -44,9 +42,7 @@ public class RentRepository implements IRepository<Rent>{
 
             transaction.commit();
         } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
+            transaction.rollback();
             e.printStackTrace();
         }
 
@@ -73,10 +69,8 @@ public class RentRepository implements IRepository<Rent>{
             entityManager.merge(item2);
 
             transaction.commit();
-        } catch(OptimisticLockException e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
+        } catch(Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }

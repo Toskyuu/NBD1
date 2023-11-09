@@ -18,9 +18,15 @@ public class ClientRepository implements IRepository<Client> {
 
     @Override
     public void Add(Client client) {
-        transaction.begin();
-        entityManager.persist(client);
-        transaction.commit();
+        try {
+            transaction.begin();
+            entityManager.persist(client);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -38,7 +44,6 @@ public class ClientRepository implements IRepository<Client> {
     // update client or add client to database if not exits
     @Override
     public void Update(Client client) {
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(client);
