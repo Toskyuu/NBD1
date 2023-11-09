@@ -1,5 +1,3 @@
-package tests;
-
 import mainClasses.Client;
 import mainClasses.Movie;
 import mainClasses.Rent;

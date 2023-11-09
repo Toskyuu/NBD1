@@ -1,12 +1,7 @@
-package tests;
-
-import mainClasses.Client;
-import mainClasses.Item;
 import mainClasses.Movie;
 import mainClasses.MusicAlbum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import repositories.ClientRepository;
 import repositories.ItemRepository;
 
 public class itemRepositoryTest {
@@ -27,7 +22,6 @@ public class itemRepositoryTest {
             Assertions.assertEquals(ir.Find(music.getId()), music);
             music.setAuthor("Bazzi");
             Assertions.assertEquals(ir.Find(music.getId()).getAuthor(), music.getAuthor());
-
         }
 
         @Test
