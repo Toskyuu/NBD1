@@ -24,7 +24,7 @@ public class Rent {
     @ManyToOne()
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "item_id")
     private Item item;
 

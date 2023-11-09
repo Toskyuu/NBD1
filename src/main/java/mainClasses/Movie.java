@@ -1,8 +1,10 @@
 package mainClasses;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @PrimaryKeyJoinColumn(name = "movie_ID")
 @Table(name = "movies")
 public class Movie extends Item{

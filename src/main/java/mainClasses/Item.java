@@ -1,8 +1,10 @@
 package mainClasses;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "items")
 public class Item {
