@@ -1,5 +1,6 @@
 package managers;
 
+import exceptions.RentException;
 import mainClasses.*;
 import repositories.ItemRepository;
 import repositories.RentRepository;
@@ -14,13 +15,17 @@ public class RentManager {
         this.rentRepository = rentRepo;
     }
 
-    public void rentItem(Client client, Item item) {
-        Rent rent = new Rent(LocalDate.now(), client, item);
-        item.setRented(true);
-        rentRepository.Add(rent);
+    public void rentItem(Client client, Item item) throws RentException {
+        if (item.isRented()) {
+            throw new RentException("This item is rented");
+        } else {
+            Rent rent = new Rent(LocalDate.now(), client, item);
+            item.setRented(true);
+            rentRepository.Add(rent);
+        }
     }
 
-    public void returnItem(long id, LocalDate date) {
+    public void returnItem(long id, LocalDate date) throws RentException {
         Rent rent = getRentFromItemId(id);
         Item item = rent.getItem();
         item.setRented(false);
@@ -28,8 +33,13 @@ public class RentManager {
         rentRepository.Update(rent);
 
     }
-    public Rent getRentFromItemId(long id) {
-        return rentRepository.findRentWithItemId(id);
+    public Rent getRentFromItemId(long id) throws RentException {
+        Rent rent = rentRepository.findRentWithItemId(id);
+        if (rent == null) {
+            throw new RentException("No such rent exist");
+        } else {
+            return rent;
+        }
     }
 
     public List<Rent> getAllRents(){
