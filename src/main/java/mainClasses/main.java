@@ -1,7 +1,5 @@
 package mainClasses;
 
-import exceptions.ClientException;
-import jakarta.persistence.NamedQuery;
 import managers.ClientManager;
 import managers.ItemManager;
 import managers.RentManager;
@@ -9,7 +7,6 @@ import repositories.ClientRepository;
 import repositories.ItemRepository;
 import repositories.RentRepository;
 import java.time.LocalDate;
-import java.util.List;
 
 public class main {
 
@@ -40,6 +37,7 @@ public class main {
         rentManager.rentItem(client1, movie2);
 //        rentManager.rentItem(client1, movie2);
         rentManager.rentItem(client2, musicAlbum1);
+
 
         rentManager.returnItem(movie2.getId(), LocalDate.of(2023,11,10));
 //        rentManager.returnItem(musicAlbum1.getId(), LocalDate.of(2023,11,7));
