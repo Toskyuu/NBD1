@@ -1,6 +1,8 @@
 package mainClasses;
 
-public class Item {
+import java.util.UUID;
+
+public class Item extends AbstractEntity {
     private int yearOfPremiere;
     private boolean isRented;
     private boolean isArchive;
@@ -12,6 +14,17 @@ public class Item {
     public Item(int yearOfPremiere, boolean isRented, String name, String style, String author, double basePrice) {
         this.yearOfPremiere = yearOfPremiere;
         this.isRented = isRented;
+        this.name = name;
+        this.style = style;
+        this.author = author;
+        this.basePrice = basePrice;
+    }
+
+    public Item(UUID entityID, int yearOfPremiere, boolean isRented, boolean isArchive, String name, String style, String author, double basePrice) {
+        super(entityID);
+        this.yearOfPremiere = yearOfPremiere;
+        this.isRented = isRented;
+        this.isArchive = isArchive;
         this.name = name;
         this.style = style;
         this.author = author;
@@ -45,7 +58,6 @@ public class Item {
     public String getName() {
         return name;
     }
-
 
     public String getStyle() {
         return style;

@@ -1,8 +1,11 @@
 package mainClasses;
 
-import java.util.Date;
+import org.bson.codecs.pojo.annotations.BsonId;
 
-public class Rent {
+import java.util.Date;
+import java.util.UUID;
+
+public class Rent extends AbstractEntity {
     private Date beginDate;
     private Date endDate;
     private float rentCost;
@@ -10,6 +13,14 @@ public class Rent {
     private Item item;
 
     public Rent(Date beginDate, float rentCost, Client client, Item item) {
+        this.beginDate = beginDate;
+        this.rentCost = rentCost;
+        this.client = client;
+        this.item = item;
+    }
+
+    public Rent(UUID entityID, Date beginDate, float rentCost, Client client, Item item) {
+        super(entityID);
         this.beginDate = beginDate;
         this.rentCost = rentCost;
         this.client = client;
@@ -24,7 +35,6 @@ public class Rent {
     public int getRentDays() {
         return endDate.getDate() - beginDate.getDate();
     }
-
 
     public Date getBeginDate() {
         return beginDate;
