@@ -26,7 +26,6 @@ public class Client extends AbstractEntity {
         return firstName;
     }
 
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

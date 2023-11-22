@@ -8,18 +8,18 @@ import java.util.UUID;
 public class Rent extends AbstractEntity {
     private Date beginDate;
     private Date endDate;
-    private float rentCost;
+    private double rentCost;
     private Client client;
     private Item item;
 
-    public Rent(Date beginDate, float rentCost, Client client, Item item) {
+    public Rent(Date beginDate, double rentCost, Client client, Item item) {
         this.beginDate = beginDate;
         this.rentCost = rentCost;
         this.client = client;
         this.item = item;
     }
 
-    public Rent(UUID entityID, Date beginDate, float rentCost, Client client, Item item) {
+    public Rent(UUID entityID, Date beginDate, double rentCost, Client client, Item item) {
         super(entityID);
         this.beginDate = beginDate;
         this.rentCost = rentCost;
@@ -44,7 +44,7 @@ public class Rent extends AbstractEntity {
         return endDate;
     }
 
-    public float getRentCost() {
+    public double getRentCost() {
         return rentCost;
     }
 
