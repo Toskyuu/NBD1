@@ -1,28 +1,28 @@
 package mgd;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 
-public class AbstractEntityMgd implements Serializable {
+public abstract class AbstractEntityMgd {
     @BsonProperty("_id")
-    protected UUID entityId;
+    private int id;
 
-    public AbstractEntityMgd(UUID entityId) {
-        this.entityId = entityId;
+    @BsonCreator
+    public AbstractEntityMgd(
+            @BsonProperty("_id") int id) {
+        this.id = id;
     }
 
-    public AbstractEntityMgd() {
-        this.entityId = null;
+    public int getId() {
+        return id;
     }
 
-    public UUID getEntityId() {
-        return entityId;
-    }
-
-    public void setEntityId(UUID entityId) {
-        this.entityId = entityId;
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,25 +1,26 @@
 package mainClasses;
 
-import java.util.UUID;
-
-public class Client extends AbstractEntity {
+public class Client {
+    private int id;
     private String firstName;
     private String lastName;
     private boolean isArchive;
     private String phoneNumber;
 
-    public Client(String firstName, String secondName, String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = secondName;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Client(UUID entityID, String firstName, String lastName, boolean isArchive, String phoneNumber) {
-        super(entityID);
+    public Client(int id, String firstName, String lastName, boolean isArchive, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isArchive = isArchive;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -63,6 +64,4 @@ public class Client extends AbstractEntity {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
-
-
 }

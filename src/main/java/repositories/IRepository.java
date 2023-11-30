@@ -1,13 +1,12 @@
 package repositories;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface IRepository<T> {
+public interface IRepository<T> extends AutoCloseable {
 
-    T FindById(UUID id);
-    void Add(T entity);
-    void Remove(T entity);
-    void Update(T entity);
-    List<T> FindAll();
+    T findById(int id);
+    void add(T entity);
+    void remove(int id);
+    void update(T entity);
+    List<T> findAll();
 }

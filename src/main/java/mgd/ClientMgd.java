@@ -8,33 +8,20 @@ public class ClientMgd extends AbstractEntityMgd {
 
     @BsonProperty("first_name")
     private String firstName;
-
     @BsonProperty("last_name")
     private String lastName;
-
-    @BsonProperty("is_archive")
+    @BsonProperty("archive")
     private boolean isArchive;
-
     @BsonProperty("phone_number")
     private String phoneNumber;
 
-    public ClientMgd(@BsonProperty("firstname") String firstName,
-                     @BsonProperty("lastname") String lastName,
-                     @BsonProperty("isarchive") boolean isArchive,
-                     @BsonProperty("phonenumber") String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isArchive = isArchive;
-        this.phoneNumber = phoneNumber;
-    }
-
     @BsonCreator
-    public ClientMgd(@BsonProperty("_id") UUID entityId,
-                     @BsonProperty("firstname") String firstName,
-                     @BsonProperty("lastname") String lastName,
-                     @BsonProperty("isarchive") boolean isArchive,
-                     @BsonProperty("phonenumber") String phoneNumber) {
-        super(entityId);
+    public ClientMgd(@BsonProperty("_id") int id,
+                     @BsonProperty("first_name") String firstName,
+                     @BsonProperty("last_name") String lastName,
+                     @BsonProperty("archive") boolean isArchive,
+                     @BsonProperty("phone_number") String phoneNumber) {
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.isArchive = isArchive;

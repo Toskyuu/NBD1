@@ -12,16 +12,16 @@ public class MovieMgd extends ItemMgd {
     private int totalTime;
 
     @BsonCreator
-    public MovieMgd(@BsonProperty("_id") UUID entityId,
+    public MovieMgd(@BsonProperty("_id") int id,
                     @BsonProperty("year_of_premiere") int yearOfPremiere,
-                    @BsonProperty("is_rented") boolean isRented,
-                    @BsonProperty("is_archive") boolean isArchive,
+                    @BsonProperty("rented") int isRented,
+                    @BsonProperty("archive") int isArchive,
                     @BsonProperty("name") String name,
                     @BsonProperty("style") String style,
                     @BsonProperty("author") String author,
                     @BsonProperty("base_price") double basePrice,
                     @BsonProperty("total_time") int totalTime) {
-        super(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice);
+        super(id, yearOfPremiere, isRented, isArchive, name, style, author, basePrice);
         this.totalTime = totalTime;
     }
 

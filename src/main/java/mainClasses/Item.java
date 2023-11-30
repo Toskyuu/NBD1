@@ -2,26 +2,18 @@ package mainClasses;
 
 import java.util.UUID;
 
-public class Item extends AbstractEntity {
+public abstract class Item {
+    private int id;
     private int yearOfPremiere;
-    private boolean isRented;
-    private boolean isArchive;
+    private int isRented;
+    private int isArchive;
     private String name;
     private String style;
     private String author;
     private double basePrice;
 
-    public Item(int yearOfPremiere, boolean isRented, String name, String style, String author, double basePrice) {
-        this.yearOfPremiere = yearOfPremiere;
-        this.isRented = isRented;
-        this.name = name;
-        this.style = style;
-        this.author = author;
-        this.basePrice = basePrice;
-    }
-
-    public Item(UUID entityID, int yearOfPremiere, boolean isRented, boolean isArchive, String name, String style, String author, double basePrice) {
-        super(entityID);
+    public Item(int id, int yearOfPremiere, int isRented, int isArchive, String name, String style, String author, double basePrice) {
+        this.id = id;
         this.yearOfPremiere = yearOfPremiere;
         this.isRented = isRented;
         this.isArchive = isArchive;
@@ -29,6 +21,14 @@ public class Item extends AbstractEntity {
         this.style = style;
         this.author = author;
         this.basePrice = basePrice;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getYearOfPremiere() {
@@ -39,19 +39,19 @@ public class Item extends AbstractEntity {
         this.yearOfPremiere = yearOfPremiere;
     }
 
-    public boolean isArchive() {
+    public int isArchive() {
         return isArchive;
     }
 
-    public void setArchive(boolean archive) {
+    public void setArchive(int archive) {
         isArchive = archive;
     }
 
-    public boolean isRented() {
+    public int isRented() {
         return isRented;
     }
 
-    public void setRented(boolean rented) {
+    public void setRented(int rented) {
         isRented = rented;
     }
 
@@ -59,12 +59,24 @@ public class Item extends AbstractEntity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getStyle() {
         return style;
     }
 
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public double getBasePrice() {

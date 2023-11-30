@@ -6,13 +6,13 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.util.UUID;
 
 @BsonDiscriminator(key = "_clazz")
-public class ItemMgd extends AbstractEntityMgd {
+public abstract class ItemMgd extends AbstractEntityMgd {
     @BsonProperty("year_of_premiere")
     private int yearOfPremiere;
-    @BsonProperty("is_rented")
-    private boolean isRented;
-    @BsonProperty("is_archive")
-    private boolean isArchive;
+    @BsonProperty("rented")
+    private int isRented;
+    @BsonProperty("archive")
+    private int isArchive;
     @BsonProperty("name")
     private String name;
     @BsonProperty("style")
@@ -23,15 +23,15 @@ public class ItemMgd extends AbstractEntityMgd {
     private double basePrice;
 
     @BsonCreator
-    public ItemMgd(@BsonProperty("_id") UUID entityId,
+    public ItemMgd(@BsonProperty("_id") int id,
                    @BsonProperty("year_of_premiere") int yearOfPremiere,
-                   @BsonProperty("is_rented") boolean isRented,
-                   @BsonProperty("is_archive") boolean isArchive,
+                   @BsonProperty("rented") int isRented,
+                   @BsonProperty("archive") int isArchive,
                    @BsonProperty("name") String name,
                    @BsonProperty("style") String style,
                    @BsonProperty("author") String author,
                    @BsonProperty("base_price") double basePrice) {
-        super(entityId);
+        super(id);
         this.yearOfPremiere = yearOfPremiere;
         this.isRented = isRented;
         this.isArchive = isArchive;
@@ -49,19 +49,19 @@ public class ItemMgd extends AbstractEntityMgd {
         this.yearOfPremiere = yearOfPremiere;
     }
 
-    public boolean isArchive() {
+    public int isArchive() {
         return isArchive;
     }
 
-    public void setArchive(boolean archive) {
+    public void setArchive(int archive) {
         isArchive = archive;
     }
 
-    public boolean isRented() {
+    public int isRented() {
         return isRented;
     }
 
-    public void setRented(boolean rented) {
+    public void setRented(int rented) {
         isRented = rented;
     }
 

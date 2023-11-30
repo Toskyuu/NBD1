@@ -1,46 +1,59 @@
 package mainClasses;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
-import java.util.UUID;
 
-public class Rent extends AbstractEntity {
-    private Date beginDate;
-    private Date endDate;
+public class Rent  {
+    private int id;
+    private LocalDate beginDate;
+    private LocalDate endDate;
     private double rentCost;
     private Client client;
     private Item item;
 
-    public Rent(Date beginDate, double rentCost, Client client, Item item) {
+    public Rent(int id, LocalDate beginDate, Client client, Item item) {
+        this.id = id;
         this.beginDate = beginDate;
-        this.rentCost = rentCost;
+        this.endDate = null;
+        this.rentCost = 0;
         this.client = client;
         this.item = item;
     }
 
-    public Rent(UUID entityID, Date beginDate, double rentCost, Client client, Item item) {
-        super(entityID);
-        this.beginDate = beginDate;
-        this.rentCost = rentCost;
+    public Rent(int id, Client client, Item item) {
+        this.id = id;
+        this.beginDate = LocalDate.now();
+        this.endDate = null;
+        this.rentCost = 0;
         this.client = client;
         this.item = item;
     }
 
-    public void endRent(Date endDate) {
-        item.setRented(false);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void endRent(LocalDate endDate) {
+        item.setRented(0);
         this.endDate = endDate;
+        setRentCost(item.getBasePrice()*getRentDays());
     }
 
     public int getRentDays() {
-        return endDate.getDate() - beginDate.getDate();
+        Period period = Period.between(beginDate, endDate);
+        return period.getDays();
     }
 
-    public Date getBeginDate() {
+    public LocalDate getBeginDate() {
         return beginDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -65,5 +78,9 @@ public class Rent extends AbstractEntity {
                 ", client=" + client.toString() +
                 ", item=" + item.toString() +
                 '}';
+    }
+
+    private void setRentCost(double rentCost) {
+        this.rentCost = rentCost;
     }
 }

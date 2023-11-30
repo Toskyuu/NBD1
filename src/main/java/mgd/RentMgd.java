@@ -1,70 +1,70 @@
 package mgd;
 
-import mainClasses.Client;
-import mainClasses.Item;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class RentMgd extends AbstractEntityMgd {
     @BsonProperty("begin_date")
-    private Date beginDate;
+    private LocalDate beginDate;
     @BsonProperty("end_date")
-    private Date endDate;
+    private LocalDate endDate;
     @BsonProperty("rent_cost")
-    private float rentCost;
+    private double rentCost;
     @BsonProperty("client")
-    private Client client;
+    private ClientMgd client;
     @BsonProperty("item")
-    private Item item;
+    private ItemMgd item;
 
     @BsonCreator
-    public RentMgd(@BsonProperty("begin_date") Date beginDate,
-                   @BsonProperty("rent_cost") float rentCost,
-                   @BsonProperty("client") Client client,
-                   @BsonProperty("item") Item item) {
+    public RentMgd(@BsonProperty("_id") int id,
+                   @BsonProperty("begin_date") LocalDate beginDate,
+                   @BsonProperty("end_date") LocalDate endDate,
+                   @BsonProperty("rent_cost") double rentCost,
+                   @BsonProperty("client") ClientMgd client,
+                   @BsonProperty("item") ItemMgd item) {
+        super(id);
         this.beginDate = beginDate;
-        this.rentCost = rentCost;
-        this.client = client;
-        this.item = item;
-    }
-
-    public RentMgd(UUID entityID, Date beginDate, float rentCost, Client client, Item item) {
-        super(entityID);
-        this.beginDate = beginDate;
-        this.rentCost = rentCost;
-        this.client = client;
-        this.item = item;
-    }
-
-    public void endRent(Date endDate) {
-        item.setRented(false);
         this.endDate = endDate;
+        this.rentCost = rentCost;
+        this.client = client;
+        this.item = item;
     }
 
-    public int getRentDays() {
-        return endDate.getDate() - beginDate.getDate();
+    public void endRent(LocalDate endDate) {
+        item.setRented(0);
+        this.endDate = endDate;
+        setRentCost(item.getBasePrice()* returnRentDays());
     }
 
-    public Date getBeginDate() {
+    public int returnRentDays() {
+        Period period = Period.between(beginDate, endDate);
+        return period.getDays();
+    }
+
+    public LocalDate getBeginDate() {
         return beginDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public float getRentCost() {
+    public double getRentCost() {
         return rentCost;
     }
 
-    public Client getClient() {
+    public ClientMgd getClient() {
         return client;
     }
 
-    public Item getItem() {
+    public ItemMgd getItem() {
         return item;
     }
+    private void setRentCost(double rentCost) {
+        this.rentCost = rentCost;
+    }
+
 }
