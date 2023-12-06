@@ -19,18 +19,18 @@ public class ItemManagerImpl implements ItemManager {
     }
 
     @Override
-    public void addItem(Item item) {
-        itemMgdRepository.add(ItemMapper.itemToMongo(item));
+    public boolean addItem(Item item) {
+        return itemMgdRepository.add(ItemMapper.itemToMongo(item));
     }
 
     @Override
-    public void updateItem(Item item) {
-        itemMgdRepository.update(ItemMapper.itemToMongo(item));
+    public boolean updateItem(Item item) {
+        return itemMgdRepository.update(ItemMapper.itemToMongo(item));
     }
 
     @Override
-    public void removeItem(Item item) {
-        itemMgdRepository.remove(item.getId());
+    public boolean removeItem(Item item) {
+        return itemMgdRepository.remove(item.getId());
     }
 
     @Override

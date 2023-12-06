@@ -28,27 +28,26 @@ public class RentManagerImpl implements RentManager {
     }
 
     @Override
-    public void createRent(Rent rent) {
-        RentMgd rentMgd = new RentMgd(rent.getId(), LocalDate.now(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
+    public boolean createRent(Rent rent) {
+        RentMgd rentMgd = new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
 
-        rentMgdRepository.add(rentMgd);
-        itemManager.updateItem(rent.getItem());
+        return rentMgdRepository.add(rentMgd) && itemManager.updateItem(rent.getItem());
     }
 
     @Override
-    public void updateRent(Rent rent) {
-        RentMgd rentMgd = new RentMgd(rent.getId(), LocalDate.now(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
-        rentMgdRepository.update(rentMgd);
+    public boolean updateRent(Rent rent) {
+        RentMgd rentMgd = new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
+        return rentMgdRepository.update(rentMgd);
     }
 
     @Override
-    public void removeRent(Rent rent) {
-
+    public boolean removeRent(Rent rent) {
+        return rentMgdRepository.remove(rent.getId());
     }
 
     @Override
     public void endRent(Rent rent) {
-        RentMgd rentMgd = new RentMgd(rent.getId(), LocalDate.now(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
+        RentMgd rentMgd = new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
         rentMgd.endRent(rent.getEndDate());
         rentMgdRepository.update(rentMgd);
         itemManager.updateItem(rent.getItem());
@@ -67,5 +66,10 @@ public class RentManagerImpl implements RentManager {
     @Override
     public Rent findRentById(int id) {
         return null;
+    }
+
+    @Override
+    public void close() throws Exception {
+        rentMgdRepository.close();
     }
 }

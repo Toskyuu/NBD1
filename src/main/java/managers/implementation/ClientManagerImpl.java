@@ -5,7 +5,6 @@ import managers.ClientManager;
 import mapper.ClientMapper;
 import mgd.ClientMgd;
 import repositories.MainRepositories.ClientMgdRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +16,18 @@ public class ClientManagerImpl implements ClientManager {
     }
 
     @Override
-    public void addClient(Client client) {
-        clientRepository.add(ClientMapper.clientToMongo(client));
+    public boolean addClient(Client client) {
+        return clientRepository.add(ClientMapper.clientToMongo(client));
     }
 
     @Override
-    public void updateClient(Client client) {
-        clientRepository.update(ClientMapper.clientToMongo(client));
+    public boolean updateClient(Client client) {
+        return clientRepository.update(ClientMapper.clientToMongo(client));
     }
 
     @Override
-    public void removeClient(Client client) {
-        clientRepository.remove(client.getId());
+    public boolean removeClient(Client client) {
+        return clientRepository.remove(client.getId());
     }
 
     @Override
