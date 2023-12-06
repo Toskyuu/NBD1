@@ -2,74 +2,71 @@ package test.managers;
 
 import mainClasses.Client;
 import managers.implementation.ClientManagerImpl;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.After;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ClientManagerTest {
-    ClientManagerImpl clientManager;
+    ClientManagerImpl clientManager = new ClientManagerImpl();
 
-    @BeforeEach
-    public void before() {
-        clientManager = new ClientManagerImpl();
+    @After
+    public void after() throws Exception {
+        clientManager.close();
     }
 
     @Test
-    public void addClients() {
+    public void test() {
+        //adding
         Client client1 = new Client(1, "Andrzej", "Kotek", false, "123123123");
         Client client2 = new Client(2, "Franek", "Lotek", false, "123123123");
 
-        clientManager.addClient(client1);
-        clientManager.addClient(client2);
+        assertTrue(clientManager.addClient(client1));
+        assertTrue(clientManager.addClient(client2));
 
-        assertEquals(clientManager.findAllClients().size(), 2);
-    }
+        assertEquals(2, clientManager.findAllClients().size());
 
-    @Test
-    public void removeClients() {
-        Client client1 = new Client(3, "Andrzej", "Kotek", false, "123123123");
-        Client client2 = new Client(4, "Franek", "Lotek", false, "123123123");
+        // returning
+        assertEquals(client1.getId(), clientManager.findClientById(1).getId());
 
-        clientManager.addClient(client1);
-        clientManager.addClient(client2);
+        //remove
+        Client client3 = new Client(3, "Andrzej", "Kotek", false, "123123123");
+        Client client4 = new Client(4, "Franek", "Lotek", false, "123123123");
 
-        clientManager.removeClient(client1);
+        clientManager.addClient(client3);
+        clientManager.addClient(client4);
 
-        assertEquals(clientManager.findAllClients().size(), 1);
-    }
+        clientManager.removeClient(client3);
 
-    @Test
-    public void checkingIfDbReturnsGoodValues() {
-        Client client1 = new Client(5, "Andrzej", "Kotek", false, "123123123");
+        assertEquals(3, clientManager.findAllClients().size());
 
-        clientManager.addClient(client1);
+        //checking if db returns good values
+        Client client5 = new Client(5, "Andrzej", "Kotek", false, "123123123");
 
-        assertEquals(client1.getId(), clientManager.findClientById(5).getId());
-        assertEquals(client1.getFirstName(), clientManager.findClientById(5).getFirstName());
-        assertEquals(client1.getLastName(), clientManager.findClientById(5).getLastName());
-        assertEquals(client1.isArchive(), clientManager.findClientById(5).isArchive());
-        assertEquals(client1.getPhoneNumber(), clientManager.findClientById(5).getPhoneNumber());
-    }
+        clientManager.addClient(client5);
 
-    @Test
-    public void checkingIfUpdatingWorks() {
-        Client client1 = new Client(6, "Andrzej", "Kotek", false, "123123123");
+        assertEquals(client5.getId(), clientManager.findClientById(5).getId());
+        assertEquals(client5.getFirstName(), clientManager.findClientById(5).getFirstName());
+        assertEquals(client5.getLastName(), clientManager.findClientById(5).getLastName());
+        assertEquals(client5.isArchive(), clientManager.findClientById(5).isArchive());
+        assertEquals(client5.getPhoneNumber(), clientManager.findClientById(5).getPhoneNumber());
 
-        clientManager.addClient(client1);
+        //updating
+        Client client6 = new Client(6, "Andrzej", "Kotek", false, "123123123");
+
+        clientManager.addClient(client6);
 
         String name = "Radosław";
 
-        client1.setFirstName(name);
-
-        clientManager.updateClient(client1);
-
+        client6.setFirstName(name);
+        clientManager.updateClient(client6);
         assertEquals(name, clientManager.findClientById(6).getFirstName());
-    }
 
-    @AfterEach
-    public void after() throws Exception {
-        clientManager.close();
+        clientManager.removeClient(client1);
+        clientManager.removeClient(client2);
+        clientManager.removeClient(client4);
+        clientManager.removeClient(client5);
+        clientManager.removeClient(client6);
     }
 }

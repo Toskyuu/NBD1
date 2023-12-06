@@ -2,7 +2,6 @@ package mgd;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import java.util.UUID;
 
 public class ClientMgd extends AbstractEntityMgd {
 

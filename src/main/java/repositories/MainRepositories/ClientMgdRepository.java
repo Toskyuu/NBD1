@@ -17,36 +17,42 @@ public class ClientMgdRepository extends AbstractMongoRepository implements IRep
 
 
     @Override
-    public void add(ClientMgd entity) {
+    public boolean add(ClientMgd entity) {
         try {
             clients.insertOne(entity);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void remove(int id) {
+    public boolean remove(int id) {
         try {
             clients.deleteOne(eq("_id", id));
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void update(ClientMgd entity) {
+    public boolean update(ClientMgd entity) {
         try {
             clients.replaceOne(eq("_id", entity.getId()), entity);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
     public ClientMgd findById(int id) {
         try {
-            clients.find(eq("_id", id)).first();
+            return clients.find(eq("_id", id)).first();
         } catch (Exception e) {
             e.printStackTrace();
         }

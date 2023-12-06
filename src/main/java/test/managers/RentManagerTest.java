@@ -4,10 +4,11 @@ import mainClasses.Client;
 import mainClasses.Item;
 import mainClasses.Movie;
 import mainClasses.Rent;
-import managers.ItemManager;
 import managers.implementation.ClientManagerImpl;
 import managers.implementation.ItemManagerImpl;
 import managers.implementation.RentManagerImpl;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositories.MainRepositories.RentMgdRepository;
@@ -15,17 +16,14 @@ import repositories.MainRepositories.RentMgdRepository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RentManagerTest {
-    RentMgdRepository rentMgdRepository;
-    RentManagerImpl rentManager;
-    ItemManagerImpl itemManager;
-    ClientManagerImpl clientManager;
+    ItemManagerImpl itemManager = new ItemManagerImpl();
+    ClientManagerImpl clientManager = new ClientManagerImpl();
+    RentMgdRepository rentMgdRepository = new RentMgdRepository();
+    RentManagerImpl rentManager = new RentManagerImpl(rentMgdRepository);
 
-    @BeforeEach
-    public void before() {
-        rentMgdRepository = new RentMgdRepository();
-        itemManager = new ItemManagerImpl();
-        clientManager = new ClientManagerImpl();
-        rentManager = new RentManagerImpl(rentMgdRepository);
+    @After
+    public void after() throws Exception {
+        rentManager.close();
     }
 
     @Test
@@ -39,8 +37,10 @@ public class RentManagerTest {
         itemManager.addItem(movie);
         rentManager.createRent(rent);
         assertEquals(rentManager.findAllRent().size(), 1);
+
+        clientManager.removeClient(client);
+        itemManager.removeItem(movie);
+        rentManager.removeRent(rent);
     }
-
-
 
 }

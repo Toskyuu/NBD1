@@ -9,6 +9,7 @@ import java.util.UUID;
 
 
 public abstract class AbstractEntityMgd {
+    @BsonId
     @BsonProperty("_id")
     private int id;
 

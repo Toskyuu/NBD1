@@ -3,7 +3,6 @@ package mgd;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import java.util.UUID;
 
 @BsonDiscriminator(key = "_clazz")
 public abstract class ItemMgd extends AbstractEntityMgd {

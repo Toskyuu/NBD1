@@ -7,27 +7,32 @@ import mgd.ItemMgd;
 import mgd.MovieMgd;
 import mgd.MusicAlbumMgd;
 import org.bson.Document;
+import org.junit.Test;
+
 import java.util.UUID;
 
+import static org.junit.Assert.assertEquals;
+
 public class ItemMapper {
-//    private static final String ID = "_id";
-//    private static final String YEAR_OF_PREMIERE = "year_of_premiere";
-//    private static final String IS_RENTED = "is_rented";
-//    private static final String IS_ARCHIVE = "is_archive";
-//    private static final String NAME = "name";
-//    private static final String STYLE = "style";
-//    private static final String AUTHOR = "author";
-//    private static final String BASE_PRICE = "base_price";
-//    private static final String TOTAL_TIME = "total_time";
-//    private static final String NUMBER_OF_SONGS = "number_of_songs";
+    private static final String ID = "_id";
+    private static final String YEAR_OF_PREMIERE = "year_of_premiere";
+    private static final String IS_RENTED = "rented";
+    private static final String IS_ARCHIVE = "archive";
+    private static final String NAME = "name";
+    private static final String STYLE = "style";
+    private static final String AUTHOR = "author";
+    private static final String BASE_PRICE = "base_price";
+    private static final String TOTAL_TIME = "total_time";
+    private static final String NUMBER_OF_SONGS = "number_of_songs";
 
     public static ItemMgd itemToMongo(Item item) {
         if (item instanceof Movie) {
             return new MovieMgd(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(), item.getStyle(), item.getAuthor(), item.getBasePrice(), ((Movie) item).getTotalTime());
         } else if (item instanceof MusicAlbum) {
             return new MusicAlbumMgd(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(), item.getStyle(), item.getAuthor(), item.getBasePrice(), ((MusicAlbum) item).getNumberOfSongs());
+        } else {
+            return null;
         }
-        return null;
     }
 
     public static Item itemFromMongo(ItemMgd item) {
@@ -38,8 +43,47 @@ public class ItemMapper {
         } else {
             return null;
         }
-
     }
+
+    public static ItemMgd toItemMgd(Document itemDocument) {
+        if (itemDocument.get("_clazz").equals("movie")) {
+            return toMovieMgd(itemDocument);
+        }
+        if (itemDocument.get("_clazz").equals("music_album")) {
+            return toMusicAlbumMgd(itemDocument);
+        }
+        return null;
+    }
+
+    private static MovieMgd toMovieMgd(Document courtDocument) {
+        return new MovieMgd(
+                courtDocument.get(ID, Integer.class),
+                courtDocument.get(YEAR_OF_PREMIERE, Integer.class),
+                courtDocument.get(IS_RENTED, Integer.class),
+                courtDocument.get(IS_ARCHIVE, Integer.class),
+                courtDocument.get(NAME, String.class),
+                courtDocument.get(STYLE, String.class),
+                courtDocument.get(AUTHOR, String.class),
+                courtDocument.get(BASE_PRICE, Double.class),
+                courtDocument.get(TOTAL_TIME, Integer.class)
+        );
+    }
+
+    private static MusicAlbumMgd toMusicAlbumMgd(Document courtDocument) {
+        return new MusicAlbumMgd(
+                courtDocument.get(ID, Integer.class),
+                courtDocument.get(YEAR_OF_PREMIERE, Integer.class),
+                courtDocument.get(IS_RENTED, Integer.class),
+                courtDocument.get(IS_ARCHIVE, Integer.class),
+                courtDocument.get(NAME, String.class),
+                courtDocument.get(STYLE, String.class),
+                courtDocument.get(AUTHOR, String.class),
+                courtDocument.get(BASE_PRICE, Double.class),
+                courtDocument.get(NUMBER_OF_SONGS, Integer.class)
+        );
+    }
+
+
 
 
 //    public static Document itemToDocument(Item item) {

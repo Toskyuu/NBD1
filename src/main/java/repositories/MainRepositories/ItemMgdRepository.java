@@ -2,6 +2,7 @@ package repositories.MainRepositories;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import mapper.ItemMapper;
 import mgd.ClientMgd;
 import mgd.ItemMgd;
 import org.bson.Document;
@@ -15,40 +16,47 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ItemMgdRepository extends AbstractMongoRepository implements IRepository<ItemMgd> {
     private final MongoCollection<ItemMgd> items = getDatabase().getCollection("items", ItemMgd.class);
-    private final MongoCollection<Document> docItems = getDatabase().getCollection("courts");
-
+    private final MongoCollection<Document> docItems = getDatabase().getCollection("items");
 
     @Override
-    public void add(ItemMgd entity) {
+    public boolean add(ItemMgd entity) {
         try {
             items.insertOne(entity);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void remove(int id) {
+    public boolean remove(int id) {
         try {
             items.deleteOne(eq("_id", id));
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void update(ItemMgd entity) {
+    public boolean update(ItemMgd entity) {
         try {
             items.replaceOne(eq("_id", entity.getId()), entity);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
     public ItemMgd findById(int id) {
         try {
-            return items.find(eq("_id", id)).first();
+//            return items.find(eq("_id", id)).first();
+            Document court = docItems.find(eq("_id", id)).first();
+            return court != null ? ItemMapper.toItemMgd(court) : null;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,10 +67,9 @@ public class ItemMgdRepository extends AbstractMongoRepository implements IRepos
     public List<ItemMgd> findAll() {
         try {
             FindIterable<ItemMgd> mongoItemsMgd = items.find();
-
             List<ItemMgd> mongoItems = new ArrayList<>();
 
-            for (ItemMgd item : mongoItems) {
+            for (ItemMgd item : mongoItemsMgd) {
                 mongoItems.add(item);
             }
             return mongoItems;
