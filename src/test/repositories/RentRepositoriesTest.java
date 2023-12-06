@@ -1,12 +1,10 @@
 package test.repositories;
 
-import mainClasses.Rent;
 import mgd.ClientMgd;
 import mgd.MusicAlbumMgd;
 import mgd.RentMgd;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositories.MainRepositories.ClientMgdRepository;
 import repositories.MainRepositories.ItemMgdRepository;

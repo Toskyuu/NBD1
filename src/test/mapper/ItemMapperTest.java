@@ -1,16 +1,11 @@
 package test.mapper;
 
-import mainClasses.Client;
 import mainClasses.Movie;
 import mainClasses.MusicAlbum;
-import mapper.ClientMapper;
 import mapper.ItemMapper;
-import mgd.ClientMgd;
-import mgd.ItemMgd;
 import mgd.MovieMgd;
 import mgd.MusicAlbumMgd;
 import org.bson.Document;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;

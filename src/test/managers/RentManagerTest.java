@@ -8,10 +8,10 @@ import managers.implementation.ClientManagerImpl;
 import managers.implementation.ItemManagerImpl;
 import managers.implementation.RentManagerImpl;
 import org.junit.After;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositories.MainRepositories.RentMgdRepository;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -38,6 +38,8 @@ public class RentManagerTest {
         rentManager.createRent(rent);
         assertEquals(rentManager.findAllRent().size(), 1);
 
+        rent.endRent(new Date((2023 - 1900), 11, 20));
+        rentManager.endRent(rent);
         clientManager.removeClient(client);
         itemManager.removeItem(movie);
         rentManager.removeRent(rent);
