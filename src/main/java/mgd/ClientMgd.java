@@ -59,4 +59,14 @@ public class ClientMgd extends AbstractEntityMgd {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "ClientMgd{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isArchive=" + isArchive +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

@@ -96,5 +96,18 @@ public abstract class ItemMgd extends AbstractEntityMgd {
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
+
+    @Override
+    public String toString() {
+        return "ItemMgd{" +
+                "yearOfPremiere=" + yearOfPremiere +
+                ", isRented=" + isRented +
+                ", isArchive=" + isArchive +
+                ", name='" + name + '\'' +
+                ", style='" + style + '\'' +
+                ", author='" + author + '\'' +
+                ", basePrice=" + basePrice +
+                '}';
+    }
 }
 
