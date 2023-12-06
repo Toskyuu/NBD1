@@ -3,16 +3,17 @@ package mainClasses;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Rent  {
     private int id;
-    private LocalDate beginDate;
-    private LocalDate endDate;
+    private Date beginDate;
+    private Date endDate;
     private double rentCost;
     private Client client;
     private Item item;
 
-    public Rent(int id, LocalDate beginDate, Client client, Item item) {
+    public Rent(int id, Date beginDate, Client client, Item item) {
         this.id = id;
         this.beginDate = beginDate;
         this.endDate = null;
@@ -23,7 +24,7 @@ public class Rent  {
 
     public Rent(int id, Client client, Item item) {
         this.id = id;
-        this.beginDate = LocalDate.now();
+        this.beginDate = new Date();
         this.endDate = null;
         this.rentCost = 0;
         this.client = client;
@@ -38,22 +39,22 @@ public class Rent  {
         this.id = id;
     }
 
-    public void endRent(LocalDate endDate) {
+    public void endRent(Date endDate) {
         item.setRented(0);
         this.endDate = endDate;
         setRentCost(item.getBasePrice()*getRentDays());
     }
 
     public int getRentDays() {
-        Period period = Period.between(beginDate, endDate);
-        return period.getDays();
+        long ms = endDate.getTime() - beginDate.getTime();
+        return (int)TimeUnit.DAYS.convert(ms, TimeUnit.MILLISECONDS);
     }
 
-    public LocalDate getBeginDate() {
+    public Date getBeginDate() {
         return beginDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 

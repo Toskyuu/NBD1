@@ -1,7 +1,5 @@
 package mainClasses;
 
-import java.util.UUID;
-
 public abstract class Item {
     private int id;
     private int yearOfPremiere;
