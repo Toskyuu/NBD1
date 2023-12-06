@@ -1,6 +1,5 @@
 package managers.implementation;
 
-import mainClasses.Item;
 import mainClasses.Rent;
 import managers.ClientManager;
 import managers.ItemManager;
@@ -8,11 +7,9 @@ import managers.RentManager;
 import mapper.ClientMapper;
 import mapper.ItemMapper;
 import mapper.RentMapper;
-import mgd.ItemMgd;
 import mgd.RentMgd;
 import repositories.MainRepositories.RentMgdRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
