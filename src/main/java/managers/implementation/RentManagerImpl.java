@@ -28,6 +28,8 @@ public class RentManagerImpl implements RentManager {
     public boolean createRent(Rent rent) {
         RentMgd rentMgd = new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
 
+        rent.getItem().setRented(1);
+
         return rentMgdRepository.add(rentMgd) && itemManager.updateItem(rent.getItem());
     }
 

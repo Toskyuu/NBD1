@@ -37,6 +37,10 @@ public class RentMgdRepository extends AbstractMongoRepository implements IRepos
                 }
             }
 
+            if(entity.getItem().isRented() == 1) {
+                throw new Exception();
+            }
+
             clientSession.startTransaction();
             items.updateOne(clientSession, eq("_id", entity.getItem().getId()), inc("rented", 1));
             entity.getItem().setRented(1);
