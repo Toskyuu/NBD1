@@ -1,34 +1,43 @@
 package mainClasses;
 
 public class Client {
+    private int id;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private boolean isArchive;
     private String phoneNumber;
 
-    public Client(String firstName, String secondName, String phoneNumber) {
+    public Client(int id, String firstName, String lastName, boolean isArchive, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
+        this.isArchive = isArchive;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-
 
     public boolean isArchive() {
         return isArchive;
@@ -48,13 +57,11 @@ public class Client {
 
     @Override
     public String toString() {
-        return "mainClasses.Client{" +
+        return "main.java.mainClasses.Client{" +
                 "firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
+                ", secondName='" + lastName + '\'' +
                 ", isArchive=" + isArchive +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
-
-
 }
