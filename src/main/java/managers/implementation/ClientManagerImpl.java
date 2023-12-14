@@ -4,7 +4,7 @@ import mainClasses.Client;
 import managers.ClientManager;
 import mapper.ClientMapper;
 import mgd.ClientMgd;
-import repositories.MainRepositories.ClientMgdRepository;
+import repositories.MongoRepositories.ClientMgdRepository;
 import java.util.ArrayList;
 import java.util.List;
 

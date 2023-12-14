@@ -10,6 +10,6 @@ public interface RentManager {
     boolean removeRent(Rent rent);
     void endRent(Rent rent);
     List<Rent> findAllRent();
-    Rent findRentById(int id);
+    Rent findRentById(Rent rent);
     void close() throws Exception;
 }

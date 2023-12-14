@@ -6,7 +6,7 @@ import mgd.MusicAlbumMgd;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import repositories.MainRepositories.ItemMgdRepository;
+import repositories.MongoRepositories.ItemMgdRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

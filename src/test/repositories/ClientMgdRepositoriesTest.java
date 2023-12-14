@@ -4,7 +4,7 @@ import mgd.ClientMgd;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import repositories.MainRepositories.ClientMgdRepository;
+import repositories.MongoRepositories.ClientMgdRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

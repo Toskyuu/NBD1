@@ -6,9 +6,9 @@ import mgd.RentMgd;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import repositories.MainRepositories.ClientMgdRepository;
-import repositories.MainRepositories.ItemMgdRepository;
-import repositories.MainRepositories.RentMgdRepository;
+import repositories.MongoRepositories.ClientMgdRepository;
+import repositories.MongoRepositories.ItemMgdRepository;
+import repositories.MongoRepositories.RentMgdRepository;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

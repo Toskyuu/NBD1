@@ -8,20 +8,23 @@ import mapper.ClientMapper;
 import mapper.ItemMapper;
 import mapper.RentMapper;
 import mgd.RentMgd;
-import repositories.MainRepositories.RentMgdRepository;
+import repositories.MongoRepositories.RentMgdRepository;
+import repositories.RedisRepositories.RentRedisRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RentManagerImpl implements RentManager {
     private RentMgdRepository rentMgdRepository;
+    private RentRedisRepository rentRedisRepository;
     private ClientManager clientManager;
     private ItemManager itemManager;
 
-    public RentManagerImpl(RentMgdRepository rentMgdRepository) {
-        this.rentMgdRepository = rentMgdRepository;
-        this.clientManager = new ClientManagerImpl();
-        this.itemManager = new ItemManagerImpl();
+    public RentManagerImpl(ClientManager clientManager, ItemManager itemManager) {
+        this.rentMgdRepository = new RentMgdRepository();
+        this.rentRedisRepository = new RentRedisRepository();
+        this.clientManager = clientManager;
+        this.itemManager = itemManager;
     }
 
     @Override
@@ -30,17 +33,21 @@ public class RentManagerImpl implements RentManager {
 
         rent.getItem().setRented(1);
 
+        rentRedisRepository.add(RentMapper.rentToRedis(rent));
         return rentMgdRepository.add(rentMgd) && itemManager.updateItem(rent.getItem());
     }
 
     @Override
     public boolean updateRent(Rent rent) {
         RentMgd rentMgd = new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
+
+        rentRedisRepository.update(RentMapper.rentToRedis(rent));
         return rentMgdRepository.update(rentMgd);
     }
 
     @Override
     public boolean removeRent(Rent rent) {
+        rentRedisRepository.remove(rent.getId());
         return rentMgdRepository.remove(rent.getId());
     }
 
@@ -63,8 +70,13 @@ public class RentManagerImpl implements RentManager {
     }
 
     @Override
-    public Rent findRentById(int id) {
-        return null;
+    public Rent findRentById(Rent rent) {
+        if(rentRedisRepository.findById(rent.getId()) == null) {
+            rentRedisRepository.add(RentMapper.rentToRedis(rent));
+            return RentMapper.rentFromMongo(rentMgdRepository.findById(rent.getId()));
+        } else {
+            return RentMapper. rentRedisRepository.findById(rent.getId());
+        }
     }
 
     @Override

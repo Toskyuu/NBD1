@@ -3,6 +3,7 @@ package mapper;
 import mainClasses.Rent;
 import mgd.RentMgd;
 import org.bson.Document;
+import redis.RentJson;
 
 import java.util.Date;
 
@@ -15,14 +16,7 @@ public class RentMapper {
     private static final String ITEM = "item";
 
     public static RentMgd rentToMongo(Rent rent) {
-//        return new Document(ID, rent.getEntityID())
-//                .append(BEGIN_DATE, rent.getBeginDate())
-//                .append(END_DATE, rent.getEndDate())
-//                .append(RENT_COST, rent.getRentCost())
-//                .append(CLIENT, rent.getClient())
-//                .append(ITEM, rent.getItem());
         return new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
-//        return null;
     }
 
     public static Rent rentFromMongo(RentMgd rent) {
@@ -40,19 +34,13 @@ public class RentMapper {
         );
     }
 
-//    public static Rent fromMongoDocument(Document document) {
-//        Document clientDocument = document.get(CLIENT, Document.class);
-//        Client client = ClientMapper.fromMongoDocument(clientDocument);
-//
-//        Document itemDocument = document.get(ITEM, Document.class);
-//        Item item = ItemMapper.itemFromMongoDocument(itemDocument);
-//
-//        return new Rent(document.get(ID, UUID.class),
-//                        document.getDate(BEGIN_DATE),
-//                        document.getDouble(RENT_COST),
-//                        document.get(CLIENT, client.getClass()),
-//                        document.get(ITEM, item.getClass())
-//        );
-//    }
+    public static RentJson rentToRedis(Rent rent) {
+        return new RentJson(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(),
+                ClientMapper.toClientJson(rent.getClient()), ItemMapper.itemToRedis(rent.getItem()));
+    }
 
+    public static Rent rentFromJson(RentJson rent) {
+        return new RentJson(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(),
+                ClientMapper.mapJsonToClient(rent.getClient()), ItemMapper.itemToRedis(rent.getItem()));
+    }
 }

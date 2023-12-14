@@ -4,7 +4,7 @@ import mainClasses.Item;
 import managers.ItemManager;
 import mapper.ItemMapper;
 import mgd.ItemMgd;
-import repositories.MainRepositories.ItemMgdRepository;
+import repositories.MongoRepositories.ItemMgdRepository;
 
 import java.util.ArrayList;
 import java.util.List;

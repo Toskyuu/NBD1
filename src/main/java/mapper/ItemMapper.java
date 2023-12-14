@@ -1,5 +1,7 @@
 package mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mainClasses.Item;
 import mainClasses.Movie;
 import mainClasses.MusicAlbum;
@@ -7,6 +9,9 @@ import mgd.ItemMgd;
 import mgd.MovieMgd;
 import mgd.MusicAlbumMgd;
 import org.bson.Document;
+import redis.ItemJson;
+import redis.MovieJson;
+import redis.MusicAlbumJson;
 
 public class ItemMapper {
     private static final String ID = "_id";
@@ -19,6 +24,8 @@ public class ItemMapper {
     private static final String BASE_PRICE = "base_price";
     private static final String TOTAL_TIME = "total_time";
     private static final String NUMBER_OF_SONGS = "number_of_songs";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
 
     public static ItemMgd itemToMongo(Item item) {
         if (item instanceof Movie) {
@@ -78,137 +85,30 @@ public class ItemMapper {
         );
     }
 
-
-
-
-//    public static Document itemToDocument(Item item) {
-//        Document document = new Document(ID, item.getEntityID())
-//                .append(YEAR_OF_PREMIERE, item.getYearOfPremiere())
-//                .append(IS_RENTED, item.isRented())
-//                .append(IS_ARCHIVE, item.isArchive())
-//                .append(NAME, item.getName())
-//                .append(STYLE, item.getStyle())
-//                .append(AUTHOR, item.getAuthor())
-//                .append(BASE_PRICE, item.getBasePrice());
-//
-//        if (item instanceof Movie) {
-//            document.append(TOTAL_TIME, ((Movie) item).getTotalTime());
-//        } else if (item instanceof MusicAlbum) {
-//            document.append(NUMBER_OF_SONGS, ((MusicAlbum) item).getNumberOfSongs());
-//        }
-//
-//        return document;
-//    }
-//
-//    public static Item itemFromMongoDocument(Document document) {
-//        UUID entityId = document.get(ID, UUID.class);
-//        int yearOfPremiere = document.getInteger(YEAR_OF_PREMIERE);
-//        boolean isRented = document.getBoolean(IS_RENTED);
-//        boolean isArchive = document.getBoolean(IS_ARCHIVE);
-//        String name = document.getString(NAME);
-//        String style = document.getString(STYLE);
-//        String author = document.getString(AUTHOR);
-//        double basePrice = document.getDouble(BASE_PRICE);
-//
-//        if (document.containsKey(TOTAL_TIME)) {
-//            // MOVIE
-//            int totalTime = document.getInteger(TOTAL_TIME);
-//            return new Movie(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice, totalTime);
-//        } else if (document.containsKey(NUMBER_OF_SONGS)) {
-//            // MUSIC ALBUM
-//            int numberOfSongs = document.getInteger(NUMBER_OF_SONGS);
-//            return new MusicAlbum(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice, numberOfSongs);
-//        } else {
-//            return new Item(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice);
-//        }
+//    public static String toItemJson(Item item) throws JsonProcessingException {
+//        return objectMapper.writeValueAsString(item);
 //    }
 
+    public static Item mapJsonToItem(String json) throws JsonProcessingException {
+        return objectMapper.readValue(json, Item.class);
+    }
 
-//    public static Document itemToDocument(Item item) {
-//        Document document = new Document(ID, item.getEntityID())
-//                .append(YEAR_OF_PREMIERE, item.getYearOfPremiere())
-//                .append(IS_RENTED, item.isRented())
-//                .append(IS_ARCHIVE, item.isArchive())
-//                .append(NAME, item.getName())
-//                .append(STYLE, item.getStyle())
-//                .append(AUTHOR, item.getAuthor())
-//                .append(BASE_PRICE, item.getBasePrice());
-//
-//        if (item instanceof Movie) {
-//            document.append(TOTAL_TIME, ((Movie) item).getTotalTime());
-//        } else if (item instanceof MusicAlbum) {
-//            document.append(NUMBER_OF_SONGS, ((MusicAlbum) item).getNumberOfSongs());
-//        }
-//
-//        return document;
-//    }
-//
-//    public static Item itemFromMongoDocument(Document document) {
-//        UUID entityId = document.get(ID, UUID.class);
-//        int yearOfPremiere = document.getInteger(YEAR_OF_PREMIERE);
-//        boolean isRented = document.getBoolean(IS_RENTED);
-//        boolean isArchive = document.getBoolean(IS_ARCHIVE);
-//        String name = document.getString(NAME);
-//        String style = document.getString(STYLE);
-//        String author = document.getString(AUTHOR);
-//        double basePrice = document.getDouble(BASE_PRICE);
-//
-//        if (document.containsKey(TOTAL_TIME)) {
-//            // MOVIE
-//            int totalTime = document.getInteger(TOTAL_TIME);
-//            return new Movie(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice, totalTime);
-//        } else if (document.containsKey(NUMBER_OF_SONGS)) {
-//            // MUSIC ALBUM
-//            int numberOfSongs = document.getInteger(NUMBER_OF_SONGS);
-//            return new MusicAlbum(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice, numberOfSongs);
-//        } else {
-//            return new Item(entityId, yearOfPremiere, isRented, isArchive, name, style, author, basePrice);
-//        }
-//    }
+    public static ItemJson itemToRedis(ItemJson item){
+        if(item instanceof MusicAlbumJson){
+            return musicAlbumToRedis((MusicAlbumJson) item);
+        }
+        else if(item instanceof MovieJson){
+            return movieToRedis((Movie) item);
+        }
+        return null;
+    }
 
-//    public static Document movieToDocument(Movie movie) {
-//        return new Document(ID, movie.getEntityID())
-//                .append(YEAROFPREMIERE, movie.getYearOfPremiere())
-//                .append(IS_RENTED, movie.isRented())
-//                .append(NAME, movie.getName())
-//                .append(STYLE, movie.getStyle())
-//                .append(AUTHOR, movie.getAuthor())
-//                .append(BASE_PRICE, movie.getBasePrice())
-//                .append(TOTAL_TIME, movie.getTotalTime());
-//    }
-//
-//    public static Document musicAlbumToDocument(MusicAlbum musicAlbum) {
-//        return new Document(ID, musicAlbum.getEntityID())
-//                .append(YEAROFPREMIERE, musicAlbum.getYearOfPremiere())
-//                .append(IS_RENTED, musicAlbum.isRented())
-//                .append(NAME, musicAlbum.getName())
-//                .append(STYLE, musicAlbum.getStyle())
-//                .append(AUTHOR, musicAlbum.getAuthor())
-//                .append(BASE_PRICE, musicAlbum.getBasePrice())
-//                .append(NUMBER_OF_SONGS, musicAlbum.getNumberOfSongs());
-//    }
-//
-//    public static Movie movieFromMongoDocument(Document document) {
-//        return new Movie(document.get(ID, UUID.class),
-//                         document.getInteger(YEAROFPREMIERE),
-//                         document.getBoolean(IS_RENTED),
-//                         document.getBoolean(IS_ARCHIVE),
-//                         document.getString(NAME),
-//                         document.getString(STYLE),
-//                         document.getString(AUTHOR),
-//                         document.getDouble(BASE_PRICE),
-//                         document.getInteger(TOTAL_TIME));
-//    }
-//
-//    public static MusicAlbum musicAlbumFromMongoDocument(Document document) {
-//        return new MusicAlbum(document.get(ID, UUID.class),
-//                              document.getInteger(YEAROFPREMIERE),
-//                              document.getBoolean(IS_RENTED),
-//                              document.getBoolean(IS_ARCHIVE),
-//                              document.getString(NAME),
-//                              document.getString(STYLE),
-//                              document.getString(AUTHOR),
-//                              document.getDouble(BASE_PRICE),
-//                              document.getInteger(NUMBER_OF_SONGS));
-//    }
+    private static ItemJson musicAlbumToRedis(MusicAlbum item){
+        return new MusicAlbumJson(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(),
+                item.getStyle(), item.getAuthor(), item.getBasePrice(), item.getNumberOfSongs());
+    }
+    private static ItemJson movieToRedis(Movie item){
+        return new MovieJson(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(),
+                item.getStyle(), item.getAuthor(), item.getBasePrice(), item.getTotalTime());
+    }
 }

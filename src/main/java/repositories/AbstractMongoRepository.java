@@ -30,10 +30,10 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
     private MongoDatabase mongoDB;
 
     public AbstractMongoRepository() {
-        clientConfiguration();
+        initDbConnection();
     }
 
-    private void clientConfiguration() {
+    private void initDbConnection() {
         mongoClient = MongoClients.create(clientSettings);
         mongoDB = mongoClient.getDatabase("rentItemsDb");
 

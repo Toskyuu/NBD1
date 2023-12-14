@@ -9,7 +9,8 @@ import managers.implementation.ItemManagerImpl;
 import managers.implementation.RentManagerImpl;
 import org.junit.After;
 import org.junit.jupiter.api.Test;
-import repositories.MainRepositories.RentMgdRepository;
+import repositories.MongoRepositories.RentMgdRepository;
+import repositories.RedisRepositories.RentRedisRepository;
 
 import java.util.Date;
 
@@ -19,7 +20,8 @@ public class RentManagerTest {
     ItemManagerImpl itemManager = new ItemManagerImpl();
     ClientManagerImpl clientManager = new ClientManagerImpl();
     RentMgdRepository rentMgdRepository = new RentMgdRepository();
-    RentManagerImpl rentManager = new RentManagerImpl(rentMgdRepository);
+    RentRedisRepository rentRedisRepository = new RentRedisRepository();
+    RentManagerImpl rentManager = new RentManagerImpl(clientManager, itemManager);
 
     @After
     public void after() throws Exception {

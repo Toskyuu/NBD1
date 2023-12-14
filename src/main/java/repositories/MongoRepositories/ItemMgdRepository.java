@@ -1,4 +1,4 @@
-package repositories.MainRepositories;
+package repositories.MongoRepositories;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
