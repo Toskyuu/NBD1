@@ -57,6 +57,10 @@ public class RentJson extends AbstractEntityJson {
         this.item = item;
     }
 
+    public RentJson() {
+        super();
+    }
+
     public void endRent(Date endDate) {
         item.setRented(0);
         this.endDate = endDate;
