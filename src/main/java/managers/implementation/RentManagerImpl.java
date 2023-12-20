@@ -75,7 +75,7 @@ public class RentManagerImpl implements RentManager {
             rentRedisRepository.add(RentMapper.rentToRedis(rent));
             return RentMapper.rentFromMongo(rentMgdRepository.findById(rent.getId()));
         } else {
-            return RentMapper. rentRedisRepository.findById(rent.getId());
+            return RentMapper.rentFromRedis(rentRedisRepository.findById(rent.getId()));
         }
     }
 
