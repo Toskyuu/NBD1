@@ -18,6 +18,9 @@ public abstract class AbstractEntityJson {
         this.id = id;
     }
 
+    public AbstractEntityJson() {
+    }
+
     public int getId() {
         return id;
     }
