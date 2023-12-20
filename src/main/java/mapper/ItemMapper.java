@@ -85,20 +85,30 @@ public class ItemMapper {
         );
     }
 
-//    public static String toItemJson(Item item) throws JsonProcessingException {
-//        return objectMapper.writeValueAsString(item);
-//    }
+    public static String toItemJson(Item item) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(item);
+    }
 
     public static Item mapJsonToItem(String json) throws JsonProcessingException {
         return objectMapper.readValue(json, Item.class);
     }
 
-    public static ItemJson itemToRedis(ItemJson item){
+    public static ItemJson itemToRedis(Item item){
+        if(item instanceof MusicAlbum){
+            return musicAlbumToRedis((MusicAlbum) item);
+        }
+        else if(item instanceof Movie){
+            return movieToRedis((Movie) item);
+        }
+        return null;
+    }
+
+    public static Item itemFromRedis(ItemJson item){
         if(item instanceof MusicAlbumJson){
-            return musicAlbumToRedis((MusicAlbumJson) item);
+            return musicAlbumFromRedis((MusicAlbumJson) item);
         }
         else if(item instanceof MovieJson){
-            return movieToRedis((Movie) item);
+            return movieFromRedis((MovieJson) item);
         }
         return null;
     }
@@ -109,6 +119,16 @@ public class ItemMapper {
     }
     private static ItemJson movieToRedis(Movie item){
         return new MovieJson(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(),
+                item.getStyle(), item.getAuthor(), item.getBasePrice(), item.getTotalTime());
+    }
+
+    private static Item musicAlbumFromRedis(MusicAlbumJson item) {
+        return new MusicAlbum(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(),
+                item.getStyle(), item.getAuthor(), item.getBasePrice(), item.getNumberOfSongs());
+    }
+
+    private static Item movieFromRedis(MovieJson item) {
+        return new Movie(item.getId(), item.getYearOfPremiere(), item.isRented(), item.isArchive(), item.getName(),
                 item.getStyle(), item.getAuthor(), item.getBasePrice(), item.getTotalTime());
     }
 }
