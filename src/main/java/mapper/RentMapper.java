@@ -16,11 +16,13 @@ public class RentMapper {
     private static final String ITEM = "item";
 
     public static RentMgd rentToMongo(Rent rent) {
-        return new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(), ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
+        return new RentMgd(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(),
+                ClientMapper.clientToMongo(rent.getClient()), ItemMapper.itemToMongo(rent.getItem()));
     }
 
     public static Rent rentFromMongo(RentMgd rent) {
-            return new Rent(rent.getId(), rent.getBeginDate(), ClientMapper.clientFromMongo(rent.getClient()), ItemMapper.itemFromMongo(rent.getItem()));
+            return new Rent(rent.getId(), rent.getBeginDate(), ClientMapper.clientFromMongo(rent.getClient()),
+                    ItemMapper.itemFromMongo(rent.getItem()));
     }
 
     public static RentMgd toRentMgd(Document rentDocument) {
@@ -39,8 +41,8 @@ public class RentMapper {
                 ClientMapper.toClientJson(rent.getClient()), ItemMapper.itemToRedis(rent.getItem()));
     }
 
-    public static Rent rentFromJson(RentJson rent) {
-        return new RentJson(rent.getId(), rent.getBeginDate(), rent.getEndDate(), rent.getRentCost(),
-                ClientMapper.mapJsonToClient(rent.getClient()), ItemMapper.itemToRedis(rent.getItem()));
+    public static Rent rentFromRedis(RentJson rent) {
+        return new Rent(rent.getId(), rent.getBeginDate(), ClientMapper.mapJsonToClient(rent.getClient()),
+                ItemMapper.itemFromRedis(rent.getItem()));
     }
 }
