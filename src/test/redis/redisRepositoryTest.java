@@ -4,6 +4,7 @@ import mainClasses.Client;
 import mainClasses.MusicAlbum;
 import mapper.ClientMapper;
 import mapper.ItemMapper;
+import mapper.RentMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import redis.RentJson;
@@ -12,7 +13,6 @@ import repositories.RedisRepositories.RentRedisRepository;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class redisRepositoryTest {
-
     RentRedisRepository rents = new RentRedisRepository();
 
     @AfterEach
@@ -21,7 +21,7 @@ public class redisRepositoryTest {
     }
 
     @Test
-    public void addTest(){
+    public void addTest() {
         Client client = new Client(1,"Janusz","Kowalski", false,"545656357");
         MusicAlbum musicAlbum1 = new MusicAlbum(1,2001, 0,0, "album", "rap", "ktos", 24.56, 14);
         MusicAlbum musicAlbum2 = new MusicAlbum(2,2021, 0,0, "album2", "pop", "ktos2", 29.56, 18);
@@ -36,7 +36,7 @@ public class redisRepositoryTest {
     }
 
     @Test
-    public void removeTest(){
+    public void removeTest() {
         Client client = new Client(1,"Janusz","Kowalski", false,"545656357");
         MusicAlbum musicAlbum1 = new MusicAlbum(1,2001, 0,0, "album", "rap", "ktos", 24.56, 14);
         MusicAlbum musicAlbum2 = new MusicAlbum(2,2021, 0,0, "album2", "pop", "ktos2", 29.56, 18);
@@ -53,7 +53,7 @@ public class redisRepositoryTest {
     }
 
     @Test
-    public void clearCacheTest(){
+    public void clearCacheTest() {
         Client client = new Client(1,"Janusz","Kowalski", false,"545656357");
         MusicAlbum musicAlbum1 = new MusicAlbum(1,2001, 0,0, "album", "rap", "ktos", 24.56, 14);
         MusicAlbum musicAlbum2 = new MusicAlbum(2,2021, 0,0, "album2", "pop", "ktos2", 29.56, 18);
@@ -67,6 +67,26 @@ public class redisRepositoryTest {
         rents.clearCache();
 
         assertEquals(0, rents.findAll().size());
+    }
+
+    @Test
+    public void returnTest() {
+        Client client = new Client(1,"Janusz","Kowalski", false,"545656357");
+        MusicAlbum musicAlbum1 = new MusicAlbum(1,2001, 0,0, "album", "rap", "ktos", 24.56, 14);
+
+        RentJson rentJson = new RentJson(1, ClientMapper.toClientJson(client), ItemMapper.itemToRedis(musicAlbum1));
+
+        assertTrue(rents.add(rentJson));
+
+        RentJson returnedRent = rents.findById(1);
+
+        assertEquals(rentJson.getClient().getFirstName(), returnedRent.getClient().getFirstName());
+        assertEquals(rentJson.getClient().getLastName(), returnedRent.getClient().getLastName());
+        assertEquals(rentJson.getClient().getPhoneNumber(), returnedRent.getClient().getPhoneNumber());
+
+        assertEquals(rentJson.getItem().getAuthor(), returnedRent.getItem().getAuthor());
+        assertEquals(rentJson.getItem().getName(), returnedRent.getItem().getName());
+        assertEquals(rentJson.getItem().getStyle(), returnedRent.getItem().getStyle());
     }
 
 }

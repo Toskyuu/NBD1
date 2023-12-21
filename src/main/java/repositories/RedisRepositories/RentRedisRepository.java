@@ -20,6 +20,7 @@ public class RentRedisRepository extends AbstractRedisRepository implements IRep
     @Override
     public boolean add(RentJson entity) {
         try {
+            entity.getItem().setRented(1);
             String entityStr = jsonb.toJson(entity);
             pool.set(prefix + entity.getId(), entityStr);
             return true;
@@ -68,5 +69,7 @@ public class RentRedisRepository extends AbstractRedisRepository implements IRep
 
         return all;
     }
+
+
 
 }

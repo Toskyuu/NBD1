@@ -1,5 +1,6 @@
 package redis;
 
+import jakarta.json.bind.annotation.JsonbCreator;
 import jakarta.json.bind.annotation.JsonbProperty;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -20,7 +21,7 @@ public class RentJson extends AbstractEntityJson {
     @JsonbProperty("item")
     private ItemJson item;
 
-    @BsonCreator
+    @JsonbCreator
     public RentJson(@JsonbProperty("_id") int id,
                     @JsonbProperty("begin_date") Date beginDate,
                     @JsonbProperty("end_date") Date endDate,
@@ -35,10 +36,10 @@ public class RentJson extends AbstractEntityJson {
         this.item = item;
     }
 
-    public RentJson(@BsonProperty("_id") int id,
-                    @BsonProperty("begin_date") Date beginDate,
-                    @BsonProperty("client") ClientJson client,
-                    @BsonProperty("item") ItemJson item) {
+    public RentJson(@JsonbProperty("_id") int id,
+                    @JsonbProperty("begin_date") Date beginDate,
+                    @JsonbProperty("client") ClientJson client,
+                    @JsonbProperty("item") ItemJson item) {
         super(id);
         this.beginDate = beginDate;
         this.endDate = null;
@@ -47,9 +48,9 @@ public class RentJson extends AbstractEntityJson {
         this.item = item;
     }
 
-    public RentJson(@BsonProperty("_id") int id,
-                    @BsonProperty("client") ClientJson client,
-                    @BsonProperty("item") ItemJson item) {
+    public RentJson(@JsonbProperty("_id") int id,
+                    @JsonbProperty("client") ClientJson client,
+                    @JsonbProperty("item") ItemJson item) {
         super(id);
         this.beginDate = new Date();
         this.rentCost = 0;

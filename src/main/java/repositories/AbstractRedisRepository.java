@@ -53,16 +53,16 @@ public abstract class AbstractRedisRepository implements AutoCloseable {
         return jsonNode.get(node).asText();
     }
 
-    private static String getHost() throws IOException {
-        return getNode("host");
-    }
-
     public static JedisPooled getPool() {
         return pool;
     }
 
     public static Jsonb getJsonb() {
         return jsonb;
+    }
+
+    public boolean checkConnection() {
+        return pool.getPool().getResource().isConnected();
     }
 
     public void clearCache(){
@@ -74,7 +74,7 @@ public abstract class AbstractRedisRepository implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        pool.getPool().destroy();
+//        pool.getPool().destroy();
         pool.close();
     }
 
