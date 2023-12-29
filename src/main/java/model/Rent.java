@@ -1,15 +1,20 @@
-package mainClasses;
+package model;
+
+import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
 
 import java.util.Date;
 
 public class Rent {
+    @PartitionKey
+    private int id;
     private Date beginDate;
     private Date endDate;
     private float rentCost;
     private Client client;
     private Item item;
 
-    public Rent(Date beginDate, float rentCost, Client client, Item item) {
+    public Rent(int id, Date beginDate, float rentCost, Client client, Item item) {
+        this.id = id;
         this.beginDate = beginDate;
         this.rentCost = rentCost;
         this.client = client;
@@ -17,14 +22,13 @@ public class Rent {
     }
 
     public void endRent(Date endDate) {
-        item.setRented(false);
+//        item.setRented(false);
         this.endDate = endDate;
     }
 
     public int getRentDays() {
         return endDate.getDate() - beginDate.getDate();
     }
-
 
     public Date getBeginDate() {
         return beginDate;

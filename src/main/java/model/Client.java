@@ -1,49 +1,40 @@
-package mainClasses;
+package model;
+import com.datastax.oss.driver.api.mapper.annotations.CqlName;
+import com.datastax.oss.driver.api.mapper.annotations.Entity;
+import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
+import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
 
+@Entity
+@CqlName("clients")
+@PropertyStrategy(mutable = false)
 public class Client {
+    @PartitionKey
+    private int id;
     private String firstName;
     private String secondName;
-    private boolean isArchive;
     private String phoneNumber;
 
-    public Client(String firstName, String secondName, String phoneNumber) {
+    public Client(int id, String firstName, String secondName, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getSecondName() {
         return secondName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-
-    public boolean isArchive() {
-        return isArchive;
-    }
-
-    public void setArchive(boolean archive) {
-        isArchive = archive;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -51,7 +42,6 @@ public class Client {
         return "mainClasses.Client{" +
                 "firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
-                ", isArchive=" + isArchive +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
