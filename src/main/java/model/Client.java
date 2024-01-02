@@ -9,10 +9,10 @@ import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
 @PropertyStrategy(mutable = false)
 public class Client {
     @PartitionKey
-    private int id;
-    private String firstName;
-    private String secondName;
-    private String phoneNumber;
+    private final int id;
+    private final String firstName;
+    private final String secondName;
+    private final String phoneNumber;
 
     public Client(int id, String firstName, String secondName, String phoneNumber) {
         this.id = id;
@@ -24,15 +24,12 @@ public class Client {
     public int getId() {
         return id;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getSecondName() {
         return secondName;
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }

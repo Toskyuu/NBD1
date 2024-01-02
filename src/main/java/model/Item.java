@@ -24,16 +24,16 @@ public class Item {
     private final double basePrice;
     private final String discriminator;
 
-    public Item(int id, int yearOfPremiere, int isRented, String name, String style, String author, double basePrice,
-                String discriminator) {
+    public Item(int id, int yearOfPremiere, String name, String style, String author, double basePrice,
+                String discriminator, int isRented) {
         this.id = id;
         this.yearOfPremiere = yearOfPremiere;
-        this.isRented = isRented;
         this.name = name;
         this.style = style;
         this.author = author;
         this.basePrice = basePrice;
         this.discriminator = discriminator;
+        this.isRented = isRented;
     }
 
     public int getYearOfPremiere() {

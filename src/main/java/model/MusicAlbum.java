@@ -9,9 +9,9 @@ public class MusicAlbum extends Item {
     @CqlName("number_of_songs")
     private final int numberOfSongs;
 
-    public MusicAlbum(int id, int yearOfPremiere, int isRented, String name, String style, String author, double basePrice,
-                      int numberOfSongs, String discriminator) {
-        super(id, yearOfPremiere, isRented, name, style, author, basePrice, "music_album");
+    public MusicAlbum(int id, int numberOfSongs, int yearOfPremiere, String name, String style, String author, double basePrice,
+                      String discriminator,  int isRented) {
+        super(id, yearOfPremiere, name, style, author, basePrice, "music_album", isRented);
         this.numberOfSongs = numberOfSongs;
     }
 
